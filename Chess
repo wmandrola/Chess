@@ -1,0 +1,167 @@
+/**
+ * CHESS MODE ENGAGE
+ * @author Will Mandrola, wmandrol@purdue.edu
+ */
+public class Chess {
+    private char[][] board = new char[8][8];
+    private boolean isWhiteTurn;
+
+    public void setBoard() {
+        board[0][0] = 'r';
+        board[0][1] = 'n';
+        board[0][2] = 'b';
+        board[0][3] = 'q';
+        board[0][4] = 'k';
+        board[0][5] = 'b';
+        board[0][6] = 'n';
+        board[0][7] = 'r';
+        for (int i = 0; i < 8; i++) {
+            board[1][i] = 'p';
+        }
+        for (int i = 2; i < 6; i++) {
+            for (int j = 0; j < 8; j++) {
+                board[i][j] = '.';
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            board[6][i] = 'P';
+        }
+        board[7][0] = 'R';
+        board[7][1] = 'N';
+        board[7][2] = 'B';
+        board[7][3] = 'Q';
+        board[7][4] = 'K';
+        board[7][5] = 'B';
+        board[7][6] = 'N';
+        board[7][7] = 'R';
+        isWhiteTurn = true;
+    }
+    public void printBoard() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.print(board[i][j]);
+                System.out.print(" ");
+            }
+            System.out.print("\n");
+        }
+    }
+
+    public int[] parseSquare(String input) {
+        int[] retValues = new int[2];
+        if (input.length() != 2) {
+            retValues[0] = -1;
+            retValues[1] = -1;
+            return retValues;
+        }
+        char file = input.charAt(0);
+        switch (file) {
+            case 'a':
+                retValues[0] = 0;
+                break;
+            case 'b':
+                retValues[0] = 1;
+                break;
+            case 'c':
+                retValues[0] = 2;
+                break;
+            case 'd':
+                retValues[0] = 3;
+                break;
+            case 'e':
+                retValues[0] = 4;
+                break;
+            case 'f':
+                retValues[0] = 5;
+                break;
+            case 'g':
+                retValues[0] = 6;
+                break;
+            case 'h':
+                retValues[0] = 7;
+                break;
+            default:
+                retValues[0] = -1;
+        }
+        char rank = input.charAt(1);
+        switch (rank) {
+            case '1':
+                retValues[1] = 7;
+                break;
+            case '2':
+                retValues[1] = 6;
+                break;
+            case '3':
+                retValues[1] = 5;
+                break;
+            case '4':
+                retValues[1] = 4;
+                break;
+            case '5':
+                retValues[1] = 3;
+                break;
+            case '6':
+                retValues[1] = 2;
+                break;
+            case '7':
+                retValues[1] = 1;
+                break;
+            case '8':
+                retValues[1] = 0;
+                break;
+            default:
+                retValues[1] = -1;
+        }
+        return retValues;
+    }
+    public boolean isValidPiece(int x, int y) {
+        if (!Character.isLetter(board[x][y]))
+            return false;
+        if (isWhiteTurn) {
+            if (Character.isUpperCase(board[x][y]))
+                return true;
+            else
+                return false;
+        }
+        else {
+            if (Character.isLowerCase(board[x][y]))
+                return true;
+            else
+                return false;
+        }
+    }
+    public boolean isValidMove(int xStart, int yStart, int xEnd, int yEnd, char piece) {
+        switch (piece) {
+            case 'k':
+                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.')
+                    return true;
+                else {
+                    //castling conditional goes here
+                }
+                break;
+            case 'K':
+                //code goes here
+                break;
+            case 'q':case 'Q':
+                //code goes here
+                break;
+            case 'r':case 'R':
+                //code goes here
+                break;
+            case 'b':case 'B':
+                //code goes here
+                break;
+            case 'n':case 'N':
+                //code goes here
+                break;
+            case 'p':
+                //code goes here
+                break;
+            case 'P':
+                //code goes here
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+}
