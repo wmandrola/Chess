@@ -1,0 +1,10 @@
+/**
+ * Created by wmandrol on 9/10/15.
+ */
+public class ChessClient {
+    public static void main(String[] args) {
+        Chess c =  new Chess();
+        c.setBoard();
+        c.printBoard();
+    }
+}
