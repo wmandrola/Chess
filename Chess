@@ -3,8 +3,25 @@
  * @author Will Mandrola, wmandrol@purdue.edu
  */
 public class Chess {
-    private char[][] board = new char[8][8];
+    private char[][] board;
     private boolean isWhiteTurn;
+    private boolean whiteCanCastle;
+    private boolean blackCanCastle;
+    private boolean a1RookMoved;
+    private boolean h1RookMoved;
+    private boolean a8RookMoved;
+    private boolean h8RookMoved;
+
+    public Chess() {
+        this.board = new char[8][8];
+        this.isWhiteTurn = true;
+        this.whiteCanCastle = true;
+        this.blackCanCastle = true;
+        this.a1RookMoved = false;
+        this.h1RookMoved = false;
+        this.a8RookMoved = false;
+        this.h8RookMoved = false;
+    }
 
     public void setBoard() {
         board[0][0] = 'r';
@@ -36,6 +53,7 @@ public class Chess {
         board[7][7] = 'R';
         isWhiteTurn = true;
     }
+
     public void printBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -130,7 +148,11 @@ public class Chess {
         }
     }
     public boolean isValidMove(int xStart, int yStart, int xEnd, int yEnd, char piece) {
+        if (xStart == xEnd && yStart == yEnd)
+            return false;
+
         switch (piece) {
+            //white king
             case 'k':
                 if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.')
                     return true;
@@ -138,25 +160,118 @@ public class Chess {
                     //castling conditional goes here
                 }
                 break;
+
+            //black king
             case 'K':
-                //code goes here
+                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.')
+                    return true;
+                else {
+                    //castling conditional goes here
+                }
                 break;
+
+            //queens
             case 'q':case 'Q':
-                //code goes here
+                int xDiff = xStart - xEnd;
+                int yDiff = yStart - yEnd;
+                if (Math.abs(xDiff) != Math.abs(yDiff) && xDiff != 0 && yDiff != 0)
+                    return false;
+
+                //for moving vertically down
+                if (xDiff < 0 && yDiff == 0) {
+                    for (int i = xStart + 1; i <= xEnd; i++) {
+                        if (board[i][yEnd] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving vertically up
+                if (xDiff > 0 && yDiff == 0) {
+                    for (int i = xStart - 1; i >= xEnd; i--) {
+                        if (board[i][yEnd] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving horizontally right
+                if (yDiff < 0 && xDiff == 0) {
+                    for (int i = yStart + 1; i <= yEnd; i++) {
+                        if (board[xEnd][i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving horizontally left
+                if (yDiff > 0 && xDiff == 0) {
+                    for (int i = yStart - 1; i >= yEnd; i--) {
+                        if (board[xEnd][i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving diagonally down and to the right
+                if (xDiff < 0 && yDiff < 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart + i][yStart + i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving diagonally down and to the left
+                if (xDiff < 0 && yDiff > 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart + i][yStart - i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving diagonally up and to the right
+                if (xDiff > 0 && yDiff < 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart - i][yStart + i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving diagonally up and to the left
+                if (xDiff > 0 && yDiff > 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart - i][yStart - i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
                 break;
+
+            //rooks
             case 'r':case 'R':
                 //code goes here
                 break;
+
+            //bishops
             case 'b':case 'B':
                 //code goes here
                 break;
+
+            //knights
             case 'n':case 'N':
                 //code goes here
                 break;
-            case 'p':
+
+            //white pawns
+            case 'P':
                 //code goes here
                 break;
-            case 'P':
+
+            //black pawns
+            case 'p':
                 //code goes here
                 break;
             default:
