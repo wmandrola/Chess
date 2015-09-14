@@ -151,29 +151,82 @@ public class Chess {
         if (xStart == xEnd && yStart == yEnd)
             return false;
 
+        int xDiff;
+        int yDiff;
+
         switch (piece) {
             //white king
             case 'k':
-                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.')
+                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.') {
+                    whiteCanCastle = false;
                     return true;
+                }
                 else {
-                    //castling conditional goes here
+                    if (xStart == xEnd && Math.abs(yStart - yEnd) == 2) {
+                        if (!whiteCanCastle)
+                            return false;
+                        if (yEnd == 2) {
+                            if (a1RookMoved)
+                                return false;
+                            for (int i = 3; i > 0; i--) {
+                                if (board[7][i] != '.')
+                                    return false;
+                            }
+                            whiteCanCastle = false;
+                            return true;
+                        }
+                        if (yEnd == 6) {
+                            if (h1RookMoved)
+                                return false;
+                            for (int i = 5; i < 7; i++) {
+                                if (board[7][i] != '.')
+                                    return false;
+                            }
+                            whiteCanCastle = false;
+                            return true;
+                        }
+                    }
                 }
                 break;
 
             //black king
             case 'K':
-                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.')
+                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.') {
+                    blackCanCastle = false;
                     return true;
+                }
                 else {
-                    //castling conditional goes here
+                    if (xStart == xEnd && Math.abs(yStart - yEnd) == 2) {
+                        if (!blackCanCastle)
+                            return false;
+                        if (yEnd == 2) {
+                            if (a8RookMoved)
+                                return false;
+                            for (int i = 3; i > 0; i--) {
+                                if (board[0][i] != '.')
+                                    return false;
+                            }
+                            blackCanCastle = false;
+                            return true;
+                        }
+                        if (yEnd == 6) {
+                            if (h8RookMoved)
+                                return false;
+                            for (int i = 5; i < 7; i++) {
+                                if (board[0][i] != '.')
+                                    return false;
+                            }
+                            blackCanCastle = false;
+                            return true;
+                        }
+                    }
                 }
                 break;
 
             //queens
             case 'q':case 'Q':
-                int xDiff = xStart - xEnd;
-                int yDiff = yStart - yEnd;
+                xDiff = xStart - xEnd;
+                yDiff = yStart - yEnd;
                 if (Math.abs(xDiff) != Math.abs(yDiff) && xDiff != 0 && yDiff != 0)
                     return false;
 
@@ -252,28 +305,174 @@ public class Chess {
 
             //rooks
             case 'r':case 'R':
-                //code goes here
+                xDiff = xStart - xEnd;
+                yDiff = yStart - yEnd;
+                if (xDiff != 0 && yDiff != 0)
+                    return false;
+
+                //for moving vertically down
+                if (xDiff < 0) {
+                    for (int i = xStart + 1; i <= xEnd; i++) {
+                        if (board[i][yEnd] != '.')
+                            return false;
+                    }
+                    if (xStart == 7 && yStart == 0)
+                        a1RookMoved = true;
+                    if (xStart == 7 && yStart == 7)
+                        h1RookMoved = true;
+                    if (xStart == 0 && yStart == 0)
+                        a8RookMoved = true;
+                    if (xStart == 0 && yStart == 7)
+                        h8RookMoved = true;
+                    return true;
+                }
+
+                //for moving vertically up
+                if (xDiff > 0) {
+                    for (int i = xStart - 1; i >= xEnd; i--) {
+                        if (board[i][yEnd] != '.')
+                            return false;
+                    }
+                    if (xStart == 7 && yStart == 0)
+                        a1RookMoved = true;
+                    if (xStart == 7 && yStart == 7)
+                        h1RookMoved = true;
+                    if (xStart == 0 && yStart == 0)
+                        a8RookMoved = true;
+                    if (xStart == 0 && yStart == 7)
+                        h8RookMoved = true;
+                    return true;
+                }
+
+                //for moving horizontally right
+                if (yDiff < 0) {
+                    for (int i = yStart + 1; i <= yEnd; i++) {
+                        if (board[xEnd][i] != '.')
+                            return false;
+                    }
+                    if (xStart == 7 && yStart == 0)
+                        a1RookMoved = true;
+                    if (xStart == 7 && yStart == 7)
+                        h1RookMoved = true;
+                    if (xStart == 0 && yStart == 0)
+                        a8RookMoved = true;
+                    if (xStart == 0 && yStart == 7)
+                        h8RookMoved = true;
+                    return true;
+                }
+
+                //for moving horizontally left
+                if (yDiff > 0) {
+                    for (int i = yStart - 1; i >= yEnd; i--) {
+                        if (board[xEnd][i] != '.')
+                            return false;
+                    }
+                    if (xStart == 7 && yStart == 0)
+                        a1RookMoved = true;
+                    if (xStart == 7 && yStart == 7)
+                        h1RookMoved = true;
+                    if (xStart == 0 && yStart == 0)
+                        a8RookMoved = true;
+                    if (xStart == 0 && yStart == 7)
+                        h8RookMoved = true;
+                    return true;
+                }
                 break;
 
             //bishops
             case 'b':case 'B':
-                //code goes here
+                xDiff = xStart - xEnd;
+                yDiff = yStart - yEnd;
+
+                if (Math.abs(xDiff) != Math.abs(yDiff))
+                    return false;
+
+                //for moving diagonally down and to the right
+                if (xDiff < 0 && yDiff < 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart + i][yStart + i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving diagonally down and to the left
+                if (xDiff < 0 && yDiff > 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart + i][yStart - i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving diagonally up and to the right
+                if (xDiff > 0 && yDiff < 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart - i][yStart + i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
+
+                //for moving diagonally up and to the left
+                if (xDiff > 0 && yDiff > 0) {
+                    for (int i = 1; i <= xDiff; i++) {
+                        if (board[xStart - i][yStart - i] != '.')
+                            return false;
+                    }
+                    return true;
+                }
                 break;
 
             //knights
             case 'n':case 'N':
-                //code goes here
-                break;
+                xDiff = xStart - xEnd;
+                yDiff = yStart - yEnd;
+                if ((Math.abs(xDiff) == 2 && Math.abs(yDiff) == 1) || (Math.abs(xDiff) == 1 && Math.abs(yDiff) == 2)) {
+                    if (isWhiteTurn) {
+                        if (!Character.isLetter(board[xEnd][yEnd]) || Character.isLowerCase(board[xEnd][yEnd]))
+                            return true;
+                        else
+                            return false;
+                    }
+                    else {
+                        if (!Character.isLetter(board[xEnd][yEnd]) || Character.isUpperCase(board[xEnd][yEnd]))
+                            return true;
+                        else
+                            return false;
+                    }
+                }
+                else {
+                    return false;
+                }
 
             //white pawns
             case 'P':
-                //code goes here
-                break;
+                xDiff = xStart - xEnd;
+                yDiff = yStart - yEnd;
+                if (yDiff == 0 && xDiff == -1 && board[xEnd][yEnd] == '.')
+                    return true;
+                else if (yDiff == 0 && xDiff == -2 && xStart == 6 && board[xEnd][yEnd] == '.' && board[xEnd + 1][yEnd] == '.')
+                    return true;
+                else if (Math.abs(yDiff) == 1 && xDiff == -1 && Character.isLowerCase(board[xEnd][yEnd]))
+                    return true;
+                else {
+                    return false;
+                }
 
             //black pawns
             case 'p':
-                //code goes here
-                break;
+                xDiff = xStart - xEnd;
+                yDiff = yStart - yEnd;
+                if (yDiff == 0 && xDiff == 1 && board[xEnd][yEnd] == '.')
+                    return true;
+                else if (yDiff == 0 && xDiff == 2 && xStart == 1 && board[xEnd][yEnd] == '.' && board[xEnd - 1][yEnd] == '.')
+                    return true;
+                else if (Math.abs(yDiff) == 1 && xDiff == 1 && Character.isUpperCase(board[xEnd][yEnd]))
+                    return true;
+                else {
+                    return false;
+                }
             default:
                 return false;
         }
