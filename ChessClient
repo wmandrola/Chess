@@ -1,10 +1,84 @@
+import java.util.Scanner;
 /**
- * Created by wmandrol on 9/10/15.
+ * chess client hype
+ * @author Will Mandrola, wmandrol@purdue.edu
  */
 public class ChessClient {
     public static void main(String[] args) {
-        Chess c =  new Chess();
+        Chess c = new Chess();
+        Scanner in = new Scanner(System.in);
+        boolean getOut = false;
         c.setBoard();
-        c.printBoard();
+        System.out.println("|-----------------------------------|");
+        System.out.println("|   Welcome to the Chess program!   |");
+        System.out.println("|-----------------------------------|");
+        while (!getOut) {
+            boolean getOutSubOne = false;
+            int[] firstValues = {0, 0};
+            int[] secondValues;
+            char piece = '.';
+            while (!getOutSubOne) {
+                c.printBoard();
+                if (c.isWhiteTurn()) {
+                    System.out.println();
+                    System.out.println("White's turn!");
+                    System.out.println("Input starting square (algebraic notation): ");
+                    String squareOne = in.nextLine();
+                    if (squareOne.equalsIgnoreCase("quit"))
+                        return;
+                    firstValues = c.parseSquare(squareOne);
+                    if (firstValues[0] == -1 || firstValues[1] == -1)
+                        System.out.println("Invalid input!");
+                    else {
+                        boolean goodPiece = c.isValidPiece(firstValues[0],firstValues[1]);
+                        if (!goodPiece)
+                            System.out.println("Invalid starting square!");
+                        else {
+                            getOutSubOne = true;
+                            piece = c.getSquare(firstValues[0], firstValues[1]);
+                        }
+                    }
+                }
+                else {
+                    System.out.println();
+                    System.out.println("Black's turn!");
+                    System.out.println("Input starting square (algebraic notation): ");
+                    String squareOne = in.nextLine();
+                    if (squareOne.equalsIgnoreCase("quit"))
+                        return;
+                    firstValues = c.parseSquare(squareOne);
+                    if (firstValues[0] == -1 || firstValues[1] == -1)
+                        System.out.println("Invalid input!");
+                    else {
+                        boolean goodPiece = c.isValidPiece(firstValues[0],firstValues[1]);
+                        if (!goodPiece)
+                            System.out.println("Invalid starting square!");
+                        else {
+                            getOutSubOne = true;
+                            piece = c.getSquare(firstValues[0], firstValues[1]);
+                        }
+                    }
+                }
+            }
+            boolean getOutSubTwo = false;
+            System.out.println("Input ending square (algebraic notation): ");
+            String squareTwo = in.nextLine();
+            if (squareTwo.equalsIgnoreCase("quit"))
+                return;
+            secondValues = c.parseSquare(squareTwo);
+            if (secondValues[0] == -1 || secondValues[1] == -1)
+                System.out.println("Invalid input!");
+            else {
+                boolean validMove = c.isValidMove(firstValues[0], firstValues[1], secondValues[0], secondValues[1],
+                        piece);
+                if (!validMove)
+                    System.out.println("Invalid move!");
+                else {
+                    c.movePiece(firstValues[0], firstValues[1], secondValues[0], secondValues[1], piece);
+                    c.promotion();
+                    c.changeTurn();
+                }
+            }
+        }
     }
 }
