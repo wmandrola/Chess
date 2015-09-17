@@ -1,3 +1,4 @@
+import java.util.Scanner;
 /**
  * CHESS MODE ENGAGE
  * @author Will Mandrola, wmandrol@purdue.edu
@@ -21,6 +22,21 @@ public class Chess {
         this.h1RookMoved = false;
         this.a8RookMoved = false;
         this.h8RookMoved = false;
+    }
+
+    public char getSquare(int x, int y) {
+        return board[x][y];
+    }
+
+    public boolean isWhiteTurn() {
+        return isWhiteTurn;
+    }
+
+    public void changeTurn() {
+        if (isWhiteTurn)
+            isWhiteTurn = false;
+        else
+            isWhiteTurn = true;
     }
 
     public void setBoard() {
@@ -74,60 +90,60 @@ public class Chess {
         char file = input.charAt(0);
         switch (file) {
             case 'a':
-                retValues[0] = 0;
+                retValues[1] = 0;
                 break;
             case 'b':
-                retValues[0] = 1;
+                retValues[1] = 1;
                 break;
             case 'c':
-                retValues[0] = 2;
+                retValues[1] = 2;
                 break;
             case 'd':
-                retValues[0] = 3;
+                retValues[1] = 3;
                 break;
             case 'e':
-                retValues[0] = 4;
+                retValues[1] = 4;
                 break;
             case 'f':
-                retValues[0] = 5;
+                retValues[1] = 5;
                 break;
             case 'g':
-                retValues[0] = 6;
+                retValues[1] = 6;
                 break;
             case 'h':
-                retValues[0] = 7;
+                retValues[1] = 7;
                 break;
             default:
-                retValues[0] = -1;
+                retValues[1] = -1;
         }
         char rank = input.charAt(1);
         switch (rank) {
             case '1':
-                retValues[1] = 7;
+                retValues[0] = 7;
                 break;
             case '2':
-                retValues[1] = 6;
+                retValues[0] = 6;
                 break;
             case '3':
-                retValues[1] = 5;
+                retValues[0] = 5;
                 break;
             case '4':
-                retValues[1] = 4;
+                retValues[0] = 4;
                 break;
             case '5':
-                retValues[1] = 3;
+                retValues[0] = 3;
                 break;
             case '6':
-                retValues[1] = 2;
+                retValues[0] = 2;
                 break;
             case '7':
-                retValues[1] = 1;
+                retValues[0] = 1;
                 break;
             case '8':
-                retValues[1] = 0;
+                retValues[0] = 0;
                 break;
             default:
-                retValues[1] = -1;
+                retValues[0] = -1;
         }
         return retValues;
     }
@@ -135,16 +151,10 @@ public class Chess {
         if (!Character.isLetter(board[x][y]))
             return false;
         if (isWhiteTurn) {
-            if (Character.isUpperCase(board[x][y]))
-                return true;
-            else
-                return false;
+            return (Character.isUpperCase(board[x][y]));
         }
         else {
-            if (Character.isLowerCase(board[x][y]))
-                return true;
-            else
-                return false;
+            return (Character.isLowerCase(board[x][y]));
         }
     }
     public boolean isValidMove(int xStart, int yStart, int xEnd, int yEnd, char piece) {
@@ -176,7 +186,7 @@ public class Chess {
                                 if (board[7][i] != '.')
                                     return false;
                             }
-                            if (isInCheck(xEnd, yEnd) && isInCheck(xEnd, yEnd + 1)) {
+                            if (!isInCheck(xEnd, yEnd) && !isInCheck(xEnd, yEnd + 1) && !isInCheck(xStart, yStart)) {
                                 whiteCanCastle = false;
                                 return true;
                             }
@@ -190,7 +200,7 @@ public class Chess {
                                 if (board[7][i] != '.')
                                     return false;
                             }
-                            if (isInCheck(xEnd, yEnd) && isInCheck(xEnd, yEnd - 1)) {
+                            if (!isInCheck(xEnd, yEnd) && !isInCheck(xEnd, yEnd - 1) && !isInCheck(xStart, yStart)) {
                                 whiteCanCastle = false;
                                 return true;
                             }
@@ -221,7 +231,7 @@ public class Chess {
                                 if (board[0][i] != '.')
                                     return false;
                             }
-                            if (isInCheck(xEnd, yEnd) && isInCheck(xEnd, yEnd + 1)) {
+                            if (!isInCheck(xEnd, yEnd) && !isInCheck(xEnd, yEnd + 1) && !isInCheck(xStart, yStart)) {
                                 blackCanCastle = false;
                                 return true;
                             }
@@ -234,7 +244,7 @@ public class Chess {
                                 if (board[0][i] != '.')
                                     return false;
                             }
-                            if (isInCheck(xEnd, yEnd) && isInCheck(xEnd, yEnd - 1)) {
+                            if (!isInCheck(xEnd, yEnd) && !isInCheck(xEnd, yEnd - 1) && !isInCheck(xStart, yStart)) {
                                 blackCanCastle = false;
                                 return true;
                             }
@@ -258,7 +268,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving vertically up
@@ -268,7 +278,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving horizontally right
@@ -278,7 +288,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving horizontally left
@@ -288,7 +298,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving diagonally down and to the right
@@ -298,7 +308,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving diagonally down and to the left
@@ -308,7 +318,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving diagonally up and to the right
@@ -318,7 +328,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving diagonally up and to the left
@@ -328,7 +338,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
                 break;
 
@@ -346,7 +356,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    if (isInCheck(values[0],values[1])) {
+                    if (!isInCheck(values[0],values[1])) {
                         if (xStart == 7 && yStart == 0)
                             a1RookMoved = true;
                         if (xStart == 7 && yStart == 7)
@@ -368,7 +378,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    if (isInCheck(values[0],values[1])) {
+                    if (!isInCheck(values[0],values[1])) {
                         if (xStart == 7 && yStart == 0)
                             a1RookMoved = true;
                         if (xStart == 7 && yStart == 7)
@@ -390,7 +400,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    if (isInCheck(values[0],values[1])) {
+                    if (!isInCheck(values[0],values[1])) {
                         if (xStart == 7 && yStart == 0)
                             a1RookMoved = true;
                         if (xStart == 7 && yStart == 7)
@@ -412,7 +422,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    if (isInCheck(values[0],values[1])) {
+                    if (!isInCheck(values[0],values[1])) {
                         if (xStart == 7 && yStart == 0)
                             a1RookMoved = true;
                         if (xStart == 7 && yStart == 7)
@@ -443,7 +453,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving diagonally down and to the left
@@ -453,7 +463,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving diagonally up and to the right
@@ -463,7 +473,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
 
                 //for moving diagonally up and to the left
@@ -473,7 +483,7 @@ public class Chess {
                             return false;
                     }
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
                 break;
 
@@ -485,7 +495,7 @@ public class Chess {
                     if (isWhiteTurn) {
                         if (!Character.isLetter(board[xEnd][yEnd]) || Character.isLowerCase(board[xEnd][yEnd])) {
                             int[] values = getKing();
-                            return (isInCheck(values[0],values[1]));
+                            return (!isInCheck(values[0],values[1]));
                         }
                         else
                             return false;
@@ -493,7 +503,7 @@ public class Chess {
                     else {
                         if (!Character.isLetter(board[xEnd][yEnd]) || Character.isUpperCase(board[xEnd][yEnd])) {
                             int[] values = getKing();
-                            return (isInCheck(values[0],values[1]));
+                            return (!isInCheck(values[0],values[1]));
                         }
                         else
                             return false;
@@ -503,42 +513,43 @@ public class Chess {
                     return false;
                 }
 
-            //white pawns
+                //white pawns
             case 'P':
                 xDiff = xStart - xEnd;
                 yDiff = yStart - yEnd;
-                if (yDiff == 0 && xDiff == -1 && board[xEnd][yEnd] == '.') {
+                if (yDiff == 0 && xDiff == 1 && board[xEnd][yEnd] == '.') {
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
-                else if (yDiff == 0 && xDiff == -2 && xStart == 6 && board[xEnd][yEnd] == '.' && board[xEnd + 1][yEnd] == '.') {
+                else if (yDiff == 0 && xDiff == 2 && xStart == 6 && board[xEnd][yEnd] == '.' && board[xEnd + 1][yEnd] == '.') {
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
-                else if (Math.abs(yDiff) == 1 && xDiff == -1 && Character.isLowerCase(board[xEnd][yEnd])) {
+                else if (Math.abs(yDiff) == 1 && xDiff == 1 && Character.isLowerCase(board[xEnd][yEnd])) {
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
                 else {
                     //add en passant later - will probably need to check what last move was
                     return false;
                 }
 
-            //black pawns
+                //black pawns
             case 'p':
                 xDiff = xStart - xEnd;
                 yDiff = yStart - yEnd;
-                if (yDiff == 0 && xDiff == 1 && board[xEnd][yEnd] == '.') {
+                if (yDiff == 0 && xDiff == -1 && board[xEnd][yEnd] == '.') {
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
-                else if (yDiff == 0 && xDiff == 2 && xStart == 1 && board[xEnd][yEnd] == '.' && board[xEnd - 1][yEnd] == '.') {
+                else if (yDiff == 0 && xDiff == -2 && xStart == 1 && board[xEnd][yEnd] == '.' && board[xEnd -
+                        1][yEnd] == '.') {
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
-                else if (Math.abs(yDiff) == 1 && xDiff == 1 && Character.isUpperCase(board[xEnd][yEnd])) {
+                else if (Math.abs(yDiff) == 1 && xDiff == -1 && Character.isUpperCase(board[xEnd][yEnd])) {
                     int[] values = getKing();
-                    return (isInCheck(values[0],values[1]));
+                    return (!isInCheck(values[0],values[1]));
                 }
                 else {
                     //add en passant later - will probably need to check what last move was
@@ -547,7 +558,7 @@ public class Chess {
             default:
                 return false;
         }
-        return true;
+        return false;
     }
 
     public int[] getKing() {
@@ -579,8 +590,8 @@ public class Chess {
         if (isWhiteTurn) {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    if (Character.isLowerCase(board[i][j])) {
-                        return isValidMove(i, j, x, y, board[i][j]);
+                    if (Character.isLowerCase(board[i][j]) && isValidMove(i, j, x, y, board[i][j])) {
+                        return true;
                     }
                 }
             }
@@ -588,12 +599,106 @@ public class Chess {
         else {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    if (Character.isUpperCase(board[i][j])) {
-                        return isValidMove(i, j, x, y, board[i][j]);
+                    if (Character.isUpperCase(board[i][j]) && isValidMove(i, j, x, y, board[i][j])) {
+                        return true;
                     }
                 }
             }
         }
-        return true;
+        return false;
+    }
+
+    public void movePiece(int xStart, int yStart, int xEnd, int yEnd, char piece) {
+        board[xStart][yStart] = '.';
+        board[xEnd][yEnd] = piece;
+        if (xStart == 7 && yStart == 4 && yEnd == 6 && piece == 'K') {
+            board[7][7] = '.';
+            board[7][5] = 'R';
+        }
+        if (xStart == 7 && yStart == 4 && yEnd == 2 && piece == 'K') {
+            board[7][0] = '.';
+            board[7][3] = 'R';
+        }
+        if (xStart == 0 && yStart == 4 && yEnd == 6 && piece == 'k') {
+            board[0][7] = '.';
+            board[0][5] = 'r';
+        }
+        if (xStart == 0 && yStart == 4 && yEnd == 2 && piece == 'k') {
+            board[0][0] = '.';
+            board[0][3] = 'r';
+        }
+    }
+
+    public void promotion() {
+        Scanner in = new Scanner(System.in);
+        boolean getOut = false;
+        if (isWhiteTurn) {
+            for (int i = 0; i < 8; i++) {
+                if (board[0][i] == 'P') {
+                    while (!getOut) {
+                        System.out.println("Promote to what piece? (Q, R, B, N)");
+                        String input = in.nextLine();
+                        if (input == null || input.length() != 1)
+                            System.out.println("Improper input.");
+                        else {
+                            input = input.toUpperCase();
+                            if (!input.equals("Q") || !input.equals("R") || !input.equals("B") || !input.equals("N"))
+                                System.out.println("Improper input.");
+                            else {
+                                getOut = true;
+                                switch (input) {
+                                    case "Q":
+                                        board[0][i] = 'Q';
+                                        break;
+                                    case "R":
+                                        board[0][i] = 'R';
+                                        break;
+                                    case "B":
+                                        board[0][i] = 'B';
+                                        break;
+                                    case "N":
+                                        board[0][i] = 'N';
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < 8; i++) {
+                if (board[7][i] == 'p') {
+                    while (!getOut) {
+                        System.out.println("Promote to what piece? (q, r, b, n)");
+                        String input = in.nextLine();
+                        if (input == null || input.length() != 1)
+                            System.out.println("Improper input.");
+                        else {
+                            input = input.toUpperCase();
+                            if (!input.equals("Q") || !input.equals("R") || !input.equals("B") || !input.equals("N"))
+                                System.out.println("Improper input.");
+                            else {
+                                getOut = true;
+                                switch (input) {
+                                    case "Q":
+                                        board[7][i] = 'q';
+                                        break;
+                                    case "R":
+                                        board[7][i] = 'r';
+                                        break;
+                                    case "B":
+                                        board[7][i] = 'b';
+                                        break;
+                                    case "N":
+                                        board[7][i] = 'n';
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
