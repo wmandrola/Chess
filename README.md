@@ -3,7 +3,9 @@ The program files I'm using to create a program that can accept valid chess move
 
 To-do list:
 
-fix bug with castling not working
+fix bug with king moves other than castling being illegal
+
+holy hell check is so broken
 
 handling en passant
 
