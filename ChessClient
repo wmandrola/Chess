@@ -60,7 +60,6 @@ public class ChessClient {
                     }
                 }
             }
-            boolean getOutSubTwo = false;
             System.out.println("Input ending square (algebraic notation): ");
             String squareTwo = in.nextLine();
             if (squareTwo.equalsIgnoreCase("quit"))
@@ -71,12 +70,20 @@ public class ChessClient {
             else {
                 boolean validMove = c.isValidMove(firstValues[0], firstValues[1], secondValues[0], secondValues[1],
                         piece);
-                if (!validMove)
-                    System.out.println("Invalid move!");
-                else {
+                if (validMove) {
                     c.movePiece(firstValues[0], firstValues[1], secondValues[0], secondValues[1], piece);
-                    c.promotion();
-                    c.changeTurn();
+                    int[] kingSquare = c.getKing();
+                    if (!c.isInCheck(kingSquare[0], kingSquare[1])) {
+                        c.promotion();
+                        c.changeTurn();
+                    }
+                    else {
+                        c.movePiece(secondValues[0], secondValues[1], firstValues[0], firstValues[1], piece);
+                        System.out.println("Invalid move - king is in check!");
+                    }
+                }
+                else {
+                    System.out.println("Invalid move!");
                 }
             }
         }
