@@ -251,6 +251,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -268,6 +270,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -285,6 +289,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -302,6 +308,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -318,6 +326,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -334,6 +344,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -350,6 +362,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -366,6 +380,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -391,6 +407,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     if (xStart == 7 && yStart == 0 && isWhiteTurn)
@@ -416,6 +434,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     if (xStart == 7 && yStart == 0 && isWhiteTurn)
@@ -441,6 +461,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     if (xStart == 7 && yStart == 0 && isWhiteTurn)
@@ -466,6 +488,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     if (xStart == 7 && yStart == 0 && isWhiteTurn)
@@ -499,6 +523,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -515,6 +541,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -531,6 +559,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
@@ -547,6 +577,8 @@ public class Chess {
                                     return false;
                                 }
                             }
+                            else
+                                return false;
                         }
                     }
                     return true;
