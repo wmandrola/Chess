@@ -3,13 +3,9 @@ The program files I'm using to create a program that can accept valid chess move
 
 To-do list:
 
-fix bug with king moves other than castling being illegal (should be fixed but not thoroughly tested)
+all pieces can jump over both ally and enemy pieces. this is bad
 
-found bug where queen could clip through pawn by moving diagonally left
-
-found bug where king was not properly recognized as in check when king on e2 and opposing queen on e1
-
-holy hell check is so broken
+holy hell check is so broken -- details about this in Chess Update 6
 
 handling en passant
 
