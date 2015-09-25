@@ -168,7 +168,7 @@ public class Chess {
             //white king
             case 'K':
                 if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && (board[xEnd][yEnd] == '.' ||
-                Character.isLowerCase(board[xEnd][yEnd]))) {
+                        Character.isLowerCase(board[xEnd][yEnd]))) {
                     return true;
                 }
                 else {
@@ -317,9 +317,10 @@ public class Chess {
 
                 //for moving diagonally down and to the right
                 if (xDiff < 0 && yDiff < 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
+                        System.out.println(xStart + i);
                         if (board[xStart + i][yStart + i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart + i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart + i])) {
@@ -335,9 +336,10 @@ public class Chess {
 
                 //for moving diagonally down and to the left
                 if (xDiff < 0 && yDiff > 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
+                        System.out.println(xStart + i);
                         if (board[xStart + i][yStart - i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart - i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart - i])) {
@@ -353,9 +355,9 @@ public class Chess {
 
                 //for moving diagonally up and to the right
                 if (xDiff > 0 && yDiff < 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
                         if (board[xStart - i][yStart + i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart + i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart + i])) {
@@ -371,9 +373,9 @@ public class Chess {
 
                 //for moving diagonally up and to the left
                 if (xDiff > 0 && yDiff > 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
                         if (board[xStart - i][yStart - i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart - i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart - i])) {
@@ -514,9 +516,9 @@ public class Chess {
 
                 //for moving diagonally down and to the right
                 if (xDiff < 0 && yDiff < 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
                         if (board[xStart + i][yStart + i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart + i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart + i])) {
@@ -532,9 +534,9 @@ public class Chess {
 
                 //for moving diagonally down and to the left
                 if (xDiff < 0 && yDiff > 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
                         if (board[xStart + i][yStart - i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart - i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart - i])) {
@@ -550,9 +552,9 @@ public class Chess {
 
                 //for moving diagonally up and to the right
                 if (xDiff > 0 && yDiff < 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
                         if (board[xStart - i][yStart + i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart + i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart + i])) {
@@ -568,9 +570,9 @@ public class Chess {
 
                 //for moving diagonally up and to the left
                 if (xDiff > 0 && yDiff > 0) {
-                    for (int i = 1; i <= xDiff; i++) {
+                    for (int i = 1; i <= Math.abs(xDiff); i++) {
                         if (board[xStart - i][yStart - i] != '.') {
-                            if (i == xDiff) {
+                            if (i == Math.abs(xDiff)) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart - i])) {
                                     return false;
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart - i])) {
@@ -670,23 +672,28 @@ public class Chess {
 
     public boolean isInCheck(int x, int y) {
         if (isWhiteTurn) {
+            changeTurn();
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (Character.isLowerCase(board[i][j]) && isValidMove(i, j, x, y, board[i][j])) {
+                        changeTurn();
                         return true;
                     }
                 }
             }
         }
         else {
+            changeTurn();
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (Character.isUpperCase(board[i][j]) && isValidMove(i, j, x, y, board[i][j])) {
+                        changeTurn();
                         return true;
                     }
                 }
             }
         }
+        changeTurn();
         return false;
     }
 
