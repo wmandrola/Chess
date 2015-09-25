@@ -167,7 +167,8 @@ public class Chess {
         switch (piece) {
             //white king
             case 'K':
-                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.') {
+                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && (board[xEnd][yEnd] == '.' ||
+                Character.isLowerCase(board[xEnd][yEnd]))) {
                     return true;
                 }
                 else {
@@ -199,7 +200,8 @@ public class Chess {
 
             //black king
             case 'k':
-                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && board[xEnd][yEnd] == '.') {
+                if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && (board[xEnd][yEnd] == '.' ||
+                        Character.isUpperCase(board[xEnd][yEnd]))) {
                     return true;
                 }
                 else {
@@ -240,8 +242,16 @@ public class Chess {
                 //for moving vertically down
                 if (xDiff < 0 && yDiff == 0) {
                     for (int i = xStart + 1; i <= xEnd; i++) {
-                        if (board[i][yEnd] != '.')
-                            return false;
+                        if (board[i][yEnd] != '.') {
+                            if (i == xEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -249,8 +259,16 @@ public class Chess {
                 //for moving vertically up
                 if (xDiff > 0 && yDiff == 0) {
                     for (int i = xStart - 1; i >= xEnd; i--) {
-                        if (board[i][yEnd] != '.')
-                            return false;
+                        if (board[i][yEnd] != '.') {
+                            if (i == xEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -258,8 +276,16 @@ public class Chess {
                 //for moving horizontally right
                 if (yDiff < 0 && xDiff == 0) {
                     for (int i = yStart + 1; i <= yEnd; i++) {
-                        if (board[xEnd][i] != '.')
-                            return false;
+                        if (board[xEnd][i] != '.') {
+                            if (i == yEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -267,8 +293,16 @@ public class Chess {
                 //for moving horizontally left
                 if (yDiff > 0 && xDiff == 0) {
                     for (int i = yStart - 1; i >= yEnd; i--) {
-                        if (board[xEnd][i] != '.')
-                            return false;
+                        if (board[xEnd][i] != '.') {
+                            if (i == yEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -276,8 +310,15 @@ public class Chess {
                 //for moving diagonally down and to the right
                 if (xDiff < 0 && yDiff < 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart + i][yStart + i] != '.')
-                            return false;
+                        if (board[xStart + i][yStart + i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart + i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart + i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -285,8 +326,15 @@ public class Chess {
                 //for moving diagonally down and to the left
                 if (xDiff < 0 && yDiff > 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart + i][yStart - i] != '.')
-                            return false;
+                        if (board[xStart + i][yStart - i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart - i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart - i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -294,8 +342,15 @@ public class Chess {
                 //for moving diagonally up and to the right
                 if (xDiff > 0 && yDiff < 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart - i][yStart + i] != '.')
-                            return false;
+                        if (board[xStart - i][yStart + i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart + i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart + i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -303,8 +358,15 @@ public class Chess {
                 //for moving diagonally up and to the left
                 if (xDiff > 0 && yDiff > 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart - i][yStart - i] != '.')
-                            return false;
+                        if (board[xStart - i][yStart - i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart - i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart - i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -320,16 +382,24 @@ public class Chess {
                 //for moving vertically down
                 if (xDiff < 0) {
                     for (int i = xStart + 1; i <= xEnd; i++) {
-                        if (board[i][yEnd] != '.')
-                            return false;
+                        if (board[i][yEnd] != '.') {
+                            if (i == xEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
-                    if (xStart == 7 && yStart == 0)
+                    if (xStart == 7 && yStart == 0 && isWhiteTurn)
                         a1RookMoved = true;
-                    if (xStart == 7 && yStart == 7)
+                    if (xStart == 7 && yStart == 7 && isWhiteTurn)
                         h1RookMoved = true;
-                    if (xStart == 0 && yStart == 0)
+                    if (xStart == 0 && yStart == 0 && !isWhiteTurn)
                         a8RookMoved = true;
-                    if (xStart == 0 && yStart == 7)
+                    if (xStart == 0 && yStart == 7 && !isWhiteTurn)
                         h8RookMoved = true;
                     return true;
                 }
@@ -337,16 +407,24 @@ public class Chess {
                 //for moving vertically up
                 if (xDiff > 0) {
                     for (int i = xStart - 1; i >= xEnd; i--) {
-                        if (board[i][yEnd] != '.')
-                            return false;
+                        if (board[i][yEnd] != '.') {
+                            if (i == xEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
-                    if (xStart == 7 && yStart == 0)
+                    if (xStart == 7 && yStart == 0 && isWhiteTurn)
                         a1RookMoved = true;
-                    if (xStart == 7 && yStart == 7)
+                    if (xStart == 7 && yStart == 7 && isWhiteTurn)
                         h1RookMoved = true;
-                    if (xStart == 0 && yStart == 0)
+                    if (xStart == 0 && yStart == 0 && !isWhiteTurn)
                         a8RookMoved = true;
-                    if (xStart == 0 && yStart == 7)
+                    if (xStart == 0 && yStart == 7 && !isWhiteTurn)
                         h8RookMoved = true;
                     return true;
                 }
@@ -354,16 +432,24 @@ public class Chess {
                 //for moving horizontally right
                 if (yDiff < 0) {
                     for (int i = yStart + 1; i <= yEnd; i++) {
-                        if (board[xEnd][i] != '.')
-                            return false;
+                        if (board[xEnd][i] != '.') {
+                            if (i == yEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
-                    if (xStart == 7 && yStart == 0)
+                    if (xStart == 7 && yStart == 0 && isWhiteTurn)
                         a1RookMoved = true;
-                    if (xStart == 7 && yStart == 7)
+                    if (xStart == 7 && yStart == 7 && isWhiteTurn)
                         h1RookMoved = true;
-                    if (xStart == 0 && yStart == 0)
+                    if (xStart == 0 && yStart == 0 && !isWhiteTurn)
                         a8RookMoved = true;
-                    if (xStart == 0 && yStart == 7)
+                    if (xStart == 0 && yStart == 7 && !isWhiteTurn)
                         h8RookMoved = true;
                     return true;
                 }
@@ -371,16 +457,24 @@ public class Chess {
                 //for moving horizontally left
                 if (yDiff > 0) {
                     for (int i = yStart - 1; i >= yEnd; i--) {
-                        if (board[xEnd][i] != '.')
-                            return false;
+                        if (board[xEnd][i] != '.') {
+                            if (i == yEnd) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
-                    if (xStart == 7 && yStart == 0)
+                    if (xStart == 7 && yStart == 0 && isWhiteTurn)
                         a1RookMoved = true;
-                    if (xStart == 7 && yStart == 7)
+                    if (xStart == 7 && yStart == 7 && isWhiteTurn)
                         h1RookMoved = true;
-                    if (xStart == 0 && yStart == 0)
+                    if (xStart == 0 && yStart == 0 && !isWhiteTurn)
                         a8RookMoved = true;
-                    if (xStart == 0 && yStart == 7)
+                    if (xStart == 0 && yStart == 7 && !isWhiteTurn)
                         h8RookMoved = true;
                     return true;
                 }
@@ -397,8 +491,15 @@ public class Chess {
                 //for moving diagonally down and to the right
                 if (xDiff < 0 && yDiff < 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart + i][yStart + i] != '.')
-                            return false;
+                        if (board[xStart + i][yStart + i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart + i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart + i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -406,8 +507,15 @@ public class Chess {
                 //for moving diagonally down and to the left
                 if (xDiff < 0 && yDiff > 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart + i][yStart - i] != '.')
-                            return false;
+                        if (board[xStart + i][yStart - i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart + i][yStart - i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart - i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -415,8 +523,15 @@ public class Chess {
                 //for moving diagonally up and to the right
                 if (xDiff > 0 && yDiff < 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart - i][yStart + i] != '.')
-                            return false;
+                        if (board[xStart - i][yStart + i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart + i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart + i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
@@ -424,8 +539,15 @@ public class Chess {
                 //for moving diagonally up and to the left
                 if (xDiff > 0 && yDiff > 0) {
                     for (int i = 1; i <= xDiff; i++) {
-                        if (board[xStart - i][yStart - i] != '.')
-                            return false;
+                        if (board[xStart - i][yStart - i] != '.') {
+                            if (i == xDiff) {
+                                if (isWhiteTurn && Character.isUpperCase(board[xStart - i][yStart - i])) {
+                                    return false;
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart - i])) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
