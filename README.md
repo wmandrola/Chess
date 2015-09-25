@@ -3,7 +3,7 @@ The program files I'm using to create a program that can accept valid chess move
 
 To-do list:
 
-all pieces can jump over both ally and enemy pieces. this is bad
+wow I'm dumb
 
 holy hell check is so broken -- details about this in Chess Update 6
 
