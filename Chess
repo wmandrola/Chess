@@ -28,6 +28,10 @@ public class Chess {
         return board[x][y];
     }
 
+    public void setSquare(int x, int y, char piece) {
+        board[x][y] = piece;
+    }
+
     public boolean isWhiteTurn() {
         return isWhiteTurn;
     }
@@ -147,16 +151,17 @@ public class Chess {
         }
         return retValues;
     }
+
     public boolean isValidPiece(int x, int y) {
         if (!Character.isLetter(board[x][y]))
             return false;
         if (isWhiteTurn) {
             return (Character.isUpperCase(board[x][y]));
-        }
-        else {
+        } else {
             return (Character.isLowerCase(board[x][y]));
         }
     }
+
     public boolean isValidMove(int xStart, int yStart, int xEnd, int yEnd, char piece) {
         if (xStart == xEnd && yStart == yEnd)
             return false;
@@ -170,8 +175,7 @@ public class Chess {
                 if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && (board[xEnd][yEnd] == '.' ||
                         Character.isLowerCase(board[xEnd][yEnd]))) {
                     return true;
-                }
-                else {
+                } else {
                     if (xStart == xEnd && Math.abs(yStart - yEnd) == 2) {
                         if (!whiteCanCastle)
                             return false;
@@ -203,8 +207,7 @@ public class Chess {
                 if (Math.abs(xStart - xEnd) <= 1 && Math.abs(yStart - yEnd) <= 1 && (board[xEnd][yEnd] == '.' ||
                         Character.isUpperCase(board[xEnd][yEnd]))) {
                     return true;
-                }
-                else {
+                } else {
                     if (xStart == xEnd && Math.abs(yStart - yEnd) == 2) {
                         if (!blackCanCastle)
                             return false;
@@ -233,7 +236,8 @@ public class Chess {
                 break;
 
             //queens
-            case 'q':case 'Q':
+            case 'q':
+            case 'Q':
                 xDiff = xStart - xEnd;
                 yDiff = yStart - yEnd;
                 if (Math.abs(xDiff) != Math.abs(yDiff) && xDiff != 0 && yDiff != 0)
@@ -246,12 +250,10 @@ public class Chess {
                             if (i == xEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -265,12 +267,10 @@ public class Chess {
                             if (i == xEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -284,12 +284,10 @@ public class Chess {
                             if (i == yEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -303,12 +301,10 @@ public class Chess {
                             if (i == yEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -326,8 +322,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart + i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -345,8 +340,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart - i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -363,8 +357,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart + i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -381,8 +374,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart - i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -391,7 +383,8 @@ public class Chess {
                 break;
 
             //rooks
-            case 'r':case 'R':
+            case 'r':
+            case 'R':
                 xDiff = xStart - xEnd;
                 yDiff = yStart - yEnd;
                 if (xDiff != 0 && yDiff != 0)
@@ -404,12 +397,10 @@ public class Chess {
                             if (i == xEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -431,12 +422,10 @@ public class Chess {
                             if (i == xEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[i][yEnd])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[i][yEnd])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -458,12 +447,10 @@ public class Chess {
                             if (i == yEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -485,12 +472,10 @@ public class Chess {
                             if (i == yEnd) {
                                 if (isWhiteTurn && Character.isUpperCase(board[xEnd][i])) {
                                     return false;
-                                }
-                                else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
+                                } else if (!isWhiteTurn && Character.isLowerCase(board[xEnd][i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -507,7 +492,8 @@ public class Chess {
                 break;
 
             //bishops
-            case 'b':case 'B':
+            case 'b':
+            case 'B':
                 xDiff = xStart - xEnd;
                 yDiff = yStart - yEnd;
 
@@ -524,8 +510,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart + i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -542,8 +527,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart + i][yStart - i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -560,8 +544,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart + i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -578,8 +561,7 @@ public class Chess {
                                 } else if (!isWhiteTurn && Character.isLowerCase(board[xStart - i][yStart - i])) {
                                     return false;
                                 }
-                            }
-                            else
+                            } else
                                 return false;
                         }
                     }
@@ -588,18 +570,17 @@ public class Chess {
                 break;
 
             //knights
-            case 'n':case 'N':
+            case 'n':
+            case 'N':
                 xDiff = xStart - xEnd;
                 yDiff = yStart - yEnd;
                 if ((Math.abs(xDiff) == 2 && Math.abs(yDiff) == 1) || (Math.abs(xDiff) == 1 && Math.abs(yDiff) == 2)) {
                     if (isWhiteTurn) {
                         return (!Character.isLetter(board[xEnd][yEnd]) || Character.isLowerCase(board[xEnd][yEnd]));
-                    }
-                    else {
+                    } else {
                         return (!Character.isLetter(board[xEnd][yEnd]) || Character.isUpperCase(board[xEnd][yEnd]));
                     }
-                }
-                else {
+                } else {
                     return false;
                 }
 
@@ -609,14 +590,11 @@ public class Chess {
                 yDiff = yStart - yEnd;
                 if (yDiff == 0 && xDiff == 1 && board[xEnd][yEnd] == '.') {
                     return true;
-                }
-                else if (yDiff == 0 && xDiff == 2 && xStart == 6 && board[xEnd][yEnd] == '.' && board[xEnd + 1][yEnd] == '.') {
+                } else if (yDiff == 0 && xDiff == 2 && xStart == 6 && board[xEnd][yEnd] == '.' && board[xEnd + 1][yEnd] == '.') {
                     return true;
-                }
-                else if (Math.abs(yDiff) == 1 && xDiff == 1 && Character.isLowerCase(board[xEnd][yEnd])) {
+                } else if (Math.abs(yDiff) == 1 && xDiff == 1 && Character.isLowerCase(board[xEnd][yEnd])) {
                     return true;
-                }
-                else {
+                } else {
                     //add en passant later - will probably need to check what last move was
                     return false;
                 }
@@ -627,15 +605,12 @@ public class Chess {
                 yDiff = yStart - yEnd;
                 if (yDiff == 0 && xDiff == -1 && board[xEnd][yEnd] == '.') {
                     return true;
-                }
-                else if (yDiff == 0 && xDiff == -2 && xStart == 1 && board[xEnd][yEnd] == '.' && board[xEnd -
+                } else if (yDiff == 0 && xDiff == -2 && xStart == 1 && board[xEnd][yEnd] == '.' && board[xEnd -
                         1][yEnd] == '.') {
                     return true;
-                }
-                else if (Math.abs(yDiff) == 1 && xDiff == -1 && Character.isUpperCase(board[xEnd][yEnd])) {
+                } else if (Math.abs(yDiff) == 1 && xDiff == -1 && Character.isUpperCase(board[xEnd][yEnd])) {
                     return true;
-                }
-                else {
+                } else {
                     //add en passant later - will probably need to check what last move was
                     return false;
                 }
@@ -655,8 +630,7 @@ public class Chess {
                     }
                 }
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (board[i][j] == 'k') {
@@ -681,8 +655,7 @@ public class Chess {
                     }
                 }
             }
-        }
-        else {
+        } else {
             changeTurn();
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
@@ -754,8 +727,7 @@ public class Chess {
                     }
                 }
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < 8; i++) {
                 if (board[7][i] == 'p') {
                     while (!getOut) {
