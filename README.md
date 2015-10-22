@@ -3,14 +3,12 @@ The program files I'm using to create a program that can accept valid chess move
 
 To-do list:
 
-wow I'm dumb
+Complete/fix the problems with the code to handle en passant in ChessClient
 
-holy hell check is so broken -- details about this in Chess Update 6
+Create a method to look for checkmate or stalemate
 
-handling en passant
+Possibly allow users to offer a draw
 
-handling checkmate
+Create a GUI
 
-using unicode characters instead of letters for chess pieces
-
-actually make a GUI
+Create an AI player
