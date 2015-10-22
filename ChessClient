@@ -9,6 +9,8 @@ public class ChessClient {
         Scanner in = new Scanner(System.in);
         boolean getOut = false;
         c.setBoard();
+        int[] lastMove = {-1, -1, -1, -1};
+        char lastPiece = '_';
         System.out.println("|-----------------------------------|");
         System.out.println("|   Welcome to the Chess program!   |");
         System.out.println("|-----------------------------------|");
@@ -70,15 +72,41 @@ public class ChessClient {
             else {
                 boolean validMove = c.isValidMove(firstValues[0], firstValues[1], secondValues[0], secondValues[1],
                         piece);
+                boolean enPassantFlag = false;
+                if (!validMove) {
+                    if (c.isWhiteTurn()) {
+                        if (piece == 'P' && firstValues[1] == 3 && lastPiece == 'p' && lastMove[1] - lastMove[3] == -2
+                                && Math.abs(lastMove[2] - firstValues[0]) == 1 && secondValues[0] == lastMove[2] &&
+                                secondValues[1] == lastMove[3] - 1) {
+                            enPassantFlag = true;
+                            validMove = true;
+                        }
+                    }
+                    else {
+                        if (piece == 'p' && firstValues[1] == 4 && lastPiece == 'P' && lastMove[1] - lastMove[3] == 2
+                                && Math.abs(lastMove[2] - firstValues[0]) == 1 && secondValues[0] == lastMove[2] &&
+                                secondValues[1] == lastMove[3] + 1) {
+                            enPassantFlag = true;
+                            validMove = true;
+                        }
+                    }
+                }
                 if (validMove) {
+                    char replacePiece = c.getSquare(secondValues[0], secondValues[1]);
                     c.movePiece(firstValues[0], firstValues[1], secondValues[0], secondValues[1], piece);
                     int[] kingSquare = c.getKing();
                     if (!c.isInCheck(kingSquare[0], kingSquare[1])) {
+                        lastMove[0] = firstValues[0];
+                        lastMove[1] = firstValues[1];
+                        lastMove[2] = secondValues[0];
+                        lastMove[3] = secondValues[1];
+                        lastPiece = piece;
                         c.promotion();
                         c.changeTurn();
                     }
                     else {
                         c.movePiece(secondValues[0], secondValues[1], firstValues[0], firstValues[1], piece);
+                        c.setSquare(secondValues[0], secondValues[1], replacePiece);
                         System.out.println("Invalid move - king is in check!");
                     }
                 }
