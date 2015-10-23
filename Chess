@@ -12,6 +12,9 @@ public class Chess {
     private boolean h1RookMoved;
     private boolean a8RookMoved;
     private boolean h8RookMoved;
+    private int[] lastMove;
+    private char lastPiece;
+    private boolean enPassantFlag;
 
     public Chess() {
         this.board = new char[8][8];
@@ -22,6 +25,9 @@ public class Chess {
         this.h1RookMoved = false;
         this.a8RookMoved = false;
         this.h8RookMoved = false;
+        this.lastMove = new int[4];
+        this.lastPiece = '.';
+        this.enPassantFlag = false;
     }
 
     public char getSquare(int x, int y) {
@@ -41,6 +47,22 @@ public class Chess {
             isWhiteTurn = false;
         else
             isWhiteTurn = true;
+    }
+
+    public boolean getEnPassant() {
+        return enPassantFlag;
+    }
+
+    public void setEnPassantFlag(boolean enPassantFlag) {
+        this.enPassantFlag = enPassantFlag;
+    }
+
+    public void storeLastMove(int xStart, int yStart, int xEnd, int yEnd, char piece) {
+        lastMove[0] = xStart;
+        lastMove[1] = yStart;
+        lastMove[2] = xEnd;
+        lastMove[3] = yEnd;
+        lastPiece = piece;
     }
 
     public void setBoard() {
@@ -594,8 +616,11 @@ public class Chess {
                     return true;
                 } else if (Math.abs(yDiff) == 1 && xDiff == 1 && Character.isLowerCase(board[xEnd][yEnd])) {
                     return true;
+                } else if (lastPiece == 'p' && lastMove[0] == 1 && lastMove[2] == 3 &&
+                        Math.abs(lastMove[3] - yStart) == 1 && xStart == 3 && xEnd == 2 && yEnd == lastMove[3]) {
+                    enPassantFlag = true;
+                    return true;
                 } else {
-                    //add en passant later - will probably need to check what last move was
                     return false;
                 }
 
@@ -610,8 +635,11 @@ public class Chess {
                     return true;
                 } else if (Math.abs(yDiff) == 1 && xDiff == -1 && Character.isUpperCase(board[xEnd][yEnd])) {
                     return true;
+                } else if (lastPiece == 'P' && lastMove[0] == 6 && lastMove[2] == 4 &&
+                        Math.abs(lastMove[3] - yStart) == 1 && xStart == 4 && xEnd == 5 && yEnd == lastMove[3]) {
+                    enPassantFlag = true;
+                    return true;
                 } else {
-                    //add en passant later - will probably need to check what last move was
                     return false;
                 }
             default:
@@ -704,7 +732,7 @@ public class Chess {
                             System.out.println("Improper input.");
                         else {
                             input = input.toUpperCase();
-                            if (!input.equals("Q") || !input.equals("R") || !input.equals("B") || !input.equals("N"))
+                            if (!(input.equals("Q") || input.equals("R") || input.equals("B") || input.equals("N")))
                                 System.out.println("Improper input.");
                             else {
                                 getOut = true;
@@ -737,7 +765,7 @@ public class Chess {
                             System.out.println("Improper input.");
                         else {
                             input = input.toUpperCase();
-                            if (!input.equals("Q") || !input.equals("R") || !input.equals("B") || !input.equals("N"))
+                            if (!(input.equals("Q") || input.equals("R") || input.equals("B") || input.equals("N")))
                                 System.out.println("Improper input.");
                             else {
                                 getOut = true;
