@@ -3,11 +3,11 @@ The program files I'm using to create a program that can accept valid chess move
 
 To-do list:
 
-Complete/fix the problems with the code to handle en passant in ChessClient
-
 Create a method to look for checkmate or stalemate
 
 Possibly allow users to offer a draw
+
+Other draw detections: insufficient mating material, fifty move rule
 
 Create a GUI
 
